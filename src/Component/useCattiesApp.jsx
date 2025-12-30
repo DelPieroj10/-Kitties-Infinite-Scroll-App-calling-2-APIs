@@ -19,14 +19,14 @@ export const useCattiesApp = () => {
       const factData = await factRes.json();
       
       const threeFirstWords = factData.fact.split(" ").slice(0, 3).join(" ");
-      const imgRes = await fetch(`${CAT_ENDPOINT_IMAGE}${threeFirstWords}?json=true`);
+      const encodedText = encodeURIComponent(threeFirstWords);
+      const imgRes = await fetch(`${CAT_ENDPOINT_IMAGE}${encodedText}?json=true`);
       const imgData = await imgRes.json();
 
-      console.log(threeFirstWords);
-
-      setItems(prev => [
-        ...prev,
+      setItems(prevItems => [
+        ...prevItems,
         {
+          id: crypto.RandomUUID(),
           fact: factData.fact,
           imageUrl: imgData.url.startsWith("https")
             ? imgData.url
@@ -55,7 +55,6 @@ export const useCattiesApp = () => {
 
     if (observerRef.current) {
       observer.observe(observerRef.current);
-      console.log("INTERSECTED", loading);
     }
 
     return () => {

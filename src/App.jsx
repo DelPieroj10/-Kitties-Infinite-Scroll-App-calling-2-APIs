@@ -9,7 +9,7 @@ export default function App() {
       <hr />
 
       {items.map((item, index) => (
-        <section key={index}>
+        <section key={item.id}>
           <p>{item.fact}</p>
           <img 
             src={item.imageUrl}
